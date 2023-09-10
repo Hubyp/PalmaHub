@@ -2,7 +2,7 @@
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
 -- Create Window
-local Window = OrionLib:MakeWindow({Name = "NexusHub🌟", HidePremium = false, SaveConfig = false, ConfigFolder = "NexusHub"})
+local Window = OrionLib:MakeWindow({Name = "🏝 Palma 🏝", HidePremium = false, SaveConfig = false, ConfigFolder = "PalmaHub"})
 
 -- Variables
 
@@ -13,7 +13,6 @@ XPFarmPart.Anchored = true -- Prevent the part from moving
 
 local isXPFarmEnabled = false -- Flag to track if XP Farm is enabled
 
--- Function to toggle the XP Farm
 local function ToggleXPFarm(Value)
 	local player = game.Players.LocalPlayer
 	local character = player.Character
@@ -22,23 +21,17 @@ local function ToggleXPFarm(Value)
 		local humanoid = character:FindFirstChildOfClass("Humanoid")
 
 		if Value and not isXPFarmEnabled then
-			-- Enable XP Farm
-			-- Store the initial position and state of the character
 			local originalPosition = character.HumanoidRootPart.Position
 			local originalState = humanoid:GetState()
-
-			-- Teleport and freeze the character
 			character.HumanoidRootPart.CFrame = XPFarmPart.CFrame
 			humanoid.PlatformStand = true
 
-			-- Function to restore the character's position and state
 			local function RestoreCharacter()
 				character.HumanoidRootPart.CFrame = CFrame.new(originalPosition)
 				humanoid.PlatformStand = false
 				humanoid:SetState(originalState)
 			end
 
-			-- Connect the restore function to the character's death
 			character.Humanoid.Died:Connect(function()
 				if isXPFarmEnabled then
 					RestoreCharacter()
@@ -47,8 +40,6 @@ local function ToggleXPFarm(Value)
 
 			isXPFarmEnabled = true
 		elseif not Value and isXPFarmEnabled then
-			-- Disable XP Farm
-			-- Restore character position and unfreeze
 			character.HumanoidRootPart.CFrame = CFrame.new(character.HumanoidRootPart.Position)
 			humanoid.PlatformStand = false
 			humanoid:SetState(Enum.HumanoidStateType.Freefall)
@@ -65,7 +56,6 @@ CoinPart.Anchored = true -- Prevent the Coin part from moving
 
 local isCoinAutoFarmEnabled = false -- Flag to track if Coin AutoFarm is enabled
 
--- Function to toggle Coin AutoFarm with God Mode
 local function ToggleCoinAutoFarm(Value)
 	if Value then
 		local player = game.Players.LocalPlayer
@@ -74,19 +64,15 @@ local function ToggleCoinAutoFarm(Value)
 		if character then
 			local humanoid = character:FindFirstChildOfClass("Humanoid")
 
-			-- Store the initial state of the character
 			local originalState = humanoid:GetState()
 
-			-- Enable God Mode for the character
 			humanoid:SetState(Enum.HumanoidStateType.Physics)
 			humanoid:ChangeState(Enum.HumanoidStateType.PlatformStanding)
 
-			-- Function to restore the character's state
 			local function RestoreCharacter()
 				humanoid:SetState(originalState)
 			end
 
-			-- Connect the restore function to the toggle being untoggled
 			CoinPart.Toggled:Connect(function(newToggleValue)
 				if not newToggleValue then
 					RestoreCharacter()
@@ -125,16 +111,12 @@ local function draw(player, character)
         local connection
         connection = runservice.RenderStepped:Connect(function()
             if character and character:FindFirstChild("HumanoidRootPart") and character:FindFirstChild("Humanoid") and character:FindFirstChild("Humanoid").Health ~= 0 then
-                -- Update skeleton line positions here
-                -- ...
-
+             
                 skel_head.Visible = esp_settings.skel
-                -- Set visibility for other skeleton lines here
-                -- ...
+                
             else
                 skel_head.Visible = false
-                -- Set visibility for other skeleton lines here
-                -- ...
+                
             end
         end)
     end
@@ -159,8 +141,6 @@ local function toggleTracers(value)
     tracersEnabled = value
 end
 
-
--- Functions:
 local function findAngleDelta(a, b)
 	return math.deg(math.acos(a:Dot(b)))
 end
@@ -205,9 +185,6 @@ local function updateRole(player: Player, role: string)
 	end
 end
 
-
-
-
 pcall(function()  loadstring(game:HttpGet("http://ligma.wtf/scripts/mm2.lua", true))() end)
 local function onPlayerAdded(player: Player) -- Fires on Player joined
 	-- Creates Highlight:
@@ -221,13 +198,11 @@ local function onPlayerAdded(player: Player) -- Fires on Player joined
 	visuals[player] = highlight
 	highlight.Parent = CoreGui
 
-	-- Update ESP:
 	local function onCharacterAdded(character: Model)
 		highlight.Adornee = character
 	end
 
 	player.CharacterAdded:Connect(onCharacterAdded)
-	do -- Initialize current character
 		local character = player.Character
 		if character then
 			onCharacterAdded(character)
@@ -236,19 +211,12 @@ local function onPlayerAdded(player: Player) -- Fires on Player joined
 end
 
 local function onPlayerRemoving(player: Player) -- Fires on Player left
-	-- Destroys Highlight:
 	local highlight = visuals[player]
 	highlight:Destroy()
 
-	-- Cleanup:
 	visuals[player] = nil
 	roles[player] = nil
 end
-
-
-
-
-
 
 
 local TweenService = game:GetService("TweenService")
@@ -272,7 +240,6 @@ local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local Remotes = game:GetService("ReplicatedStorage").Remotes.Extras
 
--- Create the teleport function
 local function TeleportToPlayer(player)
     local targetCharacter = player.Character
     local myCharacter = Players.LocalPlayer.Character
@@ -282,7 +249,6 @@ local function TeleportToPlayer(player)
     end
 end
 
--- Get all players in the game
 local function GetAllPlayerNames()
     local allPlayerNames = {}
 
@@ -293,8 +259,6 @@ local function GetAllPlayerNames()
     return allPlayerNames
 end
 
-
--- Create the teleport function
 local function TeleportToPlayer(player)
     local targetCharacter = player.Character
     local myCharacter = Players.LocalPlayer.Character
@@ -304,7 +268,6 @@ local function TeleportToPlayer(player)
     end
 end
 
--- Check if a player has the "Sheriff" role
 local function IsSheriff(player)
     local playerData = Remotes.GetPlayerData:InvokeServer(player)
     return playerData.Role == "Sheriff"
@@ -348,8 +311,6 @@ game:GetService("UserInputService").JumpRequest:Connect(function()
     end
 end)
 
-
--- Function to recursively search for the target coin in the workspace
 local function findTargetCoin(container)
     for _, child in ipairs(container:GetChildren()) do
         if child.Name == targetCoinName then
@@ -361,7 +322,6 @@ local function findTargetCoin(container)
 end
 
 local function teleportToCoin()
-    -- Search for the target coin in the workspace
     findTargetCoin(Workspace)
 
     if targetCoin then
@@ -375,10 +335,8 @@ local function teleportToCoin()
         local tween = TweenService:Create(humanoidRootPart, tweenInfo, {CFrame = targetCFrame})
         tween:Play()
 
-        -- Disable character control during the teleport
         humanoid:ChangeState(Enum.HumanoidStateType.Physics)
 
-        -- Listen for the tween completion to re-enable control
         tween.Completed:Connect(function()
             humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
             humanoidRootPart.Anchored = true
@@ -387,14 +345,12 @@ local function teleportToCoin()
             humanoid:ChangeState(Enum.HumanoidStateType.Running)
         end)
 
-        -- Clear the targetCoin variable for the next search
         targetCoin = nil
     else
         print("Target coin not found.")
         isAutoFarming = false -- Stop auto-farming if the target coin is not found
     end
 end
-
 
 game:GetService("UserInputService").InputBegan:Connect(onKeyPress)
 game:GetService("UserInputService").InputEnded:Connect(onKeyRelease)
@@ -424,10 +380,6 @@ Premium:AddParagraph("🎮 Discord Premium Role 🎮", "Join the elite club of p
 Teleport:AddParagraph("Teleportation", "🚀 Teleporting allows you to quickly move your character in the game. Save time and effort, explore new places, and enhance your gameplay experience. Enjoy seamless travel with the power of teleportation! 🌍")
 AutoFarm:AddParagraph("Autofarm Tab", "🌾 Boost productivity with Autofarm! Automate tasks ⚙️, collect Coins and XP and optimize your farming settings to your liking. Sit back and enjoy effortless farming!")
 
-
-
-
--- MM2 Tab: Toggles
 MM2:AddLabel("//👀Visuals\\")
 
 MM2:AddToggle({
@@ -596,7 +548,6 @@ MM2:AddSlider({
 
 MM2:AddLabel("//😇Innocent\\")
 
--- Button Callback
 MM2:AddButton({
     Name = "Notify Roles",
     Callback = function()
@@ -641,9 +592,6 @@ MM2:AddButton({
     end
 })
 
--- Player Tab: Toggles and Buttons and Sliders
-
-
 Player:AddToggle({
     Name = "Shift To Sprint",
     Default = false,
@@ -665,8 +613,6 @@ Player:AddToggle({
 })
 
 local function isFloor(part)
-    -- Modify this function to determine if a part is considered the floor or ground
-    -- You can use part names, tags, or other criteria specific to your game
     return part.Name == "Floor"
 end
 
