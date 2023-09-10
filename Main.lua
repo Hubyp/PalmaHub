@@ -1,10 +1,6 @@
--- Load Orion Library
 local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
 
--- Create Window
 local Window = OrionLib:MakeWindow({Name = "🏝 Palma 🏝", HidePremium = false, SaveConfig = false, ConfigFolder = "PalmaHub"})
-
--- Variables
 
 local XPFarmPart = Instance.new("Part") -- Create a new part
 XPFarmPart.Size = Vector3.new(5, 5, 5) -- Set the size of the part
